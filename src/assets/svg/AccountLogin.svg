@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>账号登录</title>
+    <defs>
+        <circle id="path-1" cx="10" cy="10" r="10"></circle>
+    </defs>
+    <g id="账号登录" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <rect id="矩形" x="0" y="0" width="24" height="24"></rect>
+            <g id="编组" transform="translate(2.000000, 2.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <circle stroke="#C8C8C8" stroke-width="1.5" cx="10" cy="10" r="9.25"></circle>
+                <circle id="椭圆形" stroke="#C8C8C8" stroke-width="1.5" mask="url(#mask-2)" cx="10" cy="7.5" r="2.75"></circle>
+                <rect id="矩形" stroke="#C8C8C8" stroke-width="1.5" mask="url(#mask-2)" x="3.75" y="12.75" width="12.5" height="8.5" rx="4"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

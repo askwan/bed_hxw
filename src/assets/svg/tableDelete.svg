@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>删除</title>
+    <g id="删除" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <rect id="矩形备份-3" fill="#D8D8D8" opacity="0" x="0" y="0" width="20" height="20"></rect>
+            <g id="编组-2" transform="translate(2.500000, 2.000000)" stroke="#8392A7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4">
+                <polyline id="Stroke-1" points="13.5 2.66666667 12.72525 15.3789062 2.27475 15.3789062 1.5 2.66666667"></polyline>
+                <path d="M9.81420677,0.713317871 L9.66788612,1.49660436 C9.57947545,1.96988608 9.16635876,2.31297729 8.68489014,2.31297729 L6.31510986,2.31297729 C5.83364124,2.31297729 5.42052455,1.96988608 5.33211388,1.49660436 L5.18579323,0.713317871 L5.18579323,0.713317871" id="Stroke-1备份" transform="translate(7.500000, 1.513148) scale(1, -1) translate(-7.500000, -1.513148) "></path>
+                <polyline id="路径" points="0 2.66666667 5.56571429 2.66666667 9.43428571 2.66666667 15 2.66666667"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
