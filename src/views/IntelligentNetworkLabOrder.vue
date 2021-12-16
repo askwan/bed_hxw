@@ -88,9 +88,10 @@
   </div>
 </template>
 <script>
-import { axios } from '../../utils/request'
-import guid from '../../utils/guid'
-import formatter from '../../utils/formatter'
+/* eslint-disable */
+import { axios } from '@/utils/request'
+import guid from '@/utils/guid'
+import formatter from '@/utils/formatter'
 const dates = [
   { label: '1个月', value: 1 },
   { label: '2个月', value: 2 },
@@ -136,7 +137,7 @@ export default {
       modelSelection: '',
       seatSelection: '',
       isDisabled: false,
-      n: 30,
+      n: 0.5,
       m: 0
     }
   },
@@ -167,16 +168,16 @@ export default {
       }
       return (82 + (this.num - 1000) * 0.06).toFixed(2)
     },
-    node () {
-      return this.$store.getters.source
-    }
+    //node () {
+    //  return this.$store.getters.source
+    //}
   },
-  watch: {
-    node (_new) {
-      this.starts = _new
-      this.ends = _new
-    }
-  },
+  //watch: {
+  //  node (_new) {
+  //    this.starts = _new
+  //    this.ends = _new
+  //  }
+  //},
   mounted () {
     this.getCity()
   },
@@ -217,15 +218,17 @@ export default {
     },
     // 获取站点信息
     getCity () {
-      axios.get('/restconf/config/networkopt-node-inventory:network-elements').then((res) => {
+      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' } } ).then((res) => {
         res = res['network-elements']['network-element']
-        console.log(res)
-        this.$store.commit('sourceData', res)
+        // console.log(res)
+        // this.$store.commit('sourceData', res)
+        this.starts = res
+        this.ends = res
       })
     },
     // 点击立即购买
     bought () {
-         axios.post('/api/portalsystem/order/distributedLaboratoryBed/add', {
+         axios.post('/portalsystem/order/distributedLaboratoryBed/add', {
             'productId': 17,
             'productName': '智能核心网实验床',
             'typeId': 0,
@@ -263,7 +266,7 @@ export default {
               'readFlag': '0',
               'deletedFlag': '0',
               'createTime': this.form.createTime
-            }] })
+            }] }, { auth: { username: 'opt', password: '123456' } })
             const id = this.form.noteId
             axios.put('/restconf/config/networkopt-resource-manage:networkResOrders/order/' + id, { 'order': [{
               'orderId': id,
@@ -282,7 +285,7 @@ export default {
               'processedFlag': '0',
               'createTime': formatter.date(new Date()),
               'updateTime': formatter.date(new Date())
-            }] })
+            }] }, { auth: { username: 'opt', password: '123456' } })
             this.$message.success('购买成功，三秒后跳到订单页')
             setTimeout(() => {
              // this.$router.push('/account/order')
