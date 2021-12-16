@@ -77,8 +77,7 @@
             <div>
               <!-- <span>费用：<a-checkable-tag style="font-size: 20px">{{ `(${price}+${this.modelSelection}+${this.seatSelection})*${this.dateSelection}` }}</a-checkable-tag></span> -->
               <span>费用：<a-checkable-tag style="font-size: 20px">{{ `(带宽费用 + 车型 + 席位) * 购买时长` }}</a-checkable-tag></span>
-              <span style="text-align: center; display: block; color: #d9001b">费用总计：<a-checkable-tag style="color: #d9001b; font-size: 20px">{{ m + allPrice * n }} </a-checkable-tag>算力豆</span>
-              <!-- <a-button class="btn" type="primary" @click="toNetwork"> 再考虑一下 </a-button> -->
+              <span style="text-align: center; display: block; color: #d9001b">费用总计：<a-checkable-tag style="color: #d9001b; font-size: 20px">{{ ((m + allPrice) * n).toFixed(2) }} </a-checkable-tag>算力豆</span>
               <a-button class="btn" type="primary" @click="bought"> 立即购买 </a-button>
             </div>
           </a-col>
@@ -106,10 +105,10 @@ const models = [
   { label: '性价比优（普通链路）', value: 15 }
 ]
 const seats = [
-  { label: '高性价比(时延<100ms、抖动<100ms、丢包率<1 %)', value: 10 },
+  { label: '高性价比（时延<100ms、抖动<100ms、丢包率<1.5%）', value: 10 },
   { label: '中等质量（时延<100ms）', value: 15 },
   { label: '高质量（时延<30ms）', value: 20 },
-  { label: '超高质量(时延<30ms、抖动<30ms、丢包率<0.01 %)', value: 30 }
+  { label: '超高质量（时延<30ms、抖动<30ms、丢包率<0.1%）', value: 30 }
 ]
 export default {
   name: 'Order',
@@ -137,7 +136,7 @@ export default {
       modelSelection: '',
       seatSelection: '',
       isDisabled: false,
-      n: 0.5,
+      n: 0.7,
       m: 0
     }
   },
@@ -168,57 +167,54 @@ export default {
       }
       return (82 + (this.num - 1000) * 0.06).toFixed(2)
     },
-    //node () {
-    //  return this.$store.getters.source
-    //}
+    // node () {
+    //   return this.$store.getters.source
+    // }
   },
-  //watch: {
-  //  node (_new) {
-  //    this.starts = _new
-  //    this.ends = _new
-  //  }
-  //},
+  // watch: {
+  //   node (_new) {
+  //     this.starts = _new
+  //     this.ends = _new
+  //   }
+  // },
   mounted () {
     this.getCity()
   },
   methods: {
     onChange (checked) {
-      console.log(`a-switch to ${checked}`)
+      // console.log(`a-switch to ${checked}`)
       this.isDisabled = checked
       if (this.isDisabled === true) {
-        this.n = this.n * 0.8
+        this.n = 0.6
         this.m = this.allPrice
       } else {
-        this.n = 1
+        this.n = 0.7
         this.m = 0
       }
     },
     timeChange (value) {
       this.dateSelection = value
-      console.log(this.dateSelection)
+      // console.log(this.dateSelection)
     },
     // 车型
     modelChange (value) {
       this.modelSelection = value.key
       this.modelLabel = value.label
-      console.log(value)
+      // console.log(value)
     },
     // 席位
     seatChange (value) {
       this.seatSelection = value.key
       this.vpnseat = value.label
-      console.log(this.seatSelection)
+      // console.log(this.seatSelection)
     },
     // 返回network页面
     toNetwork () {
-            setTimeout(() => {
-             this.$router.push('/account/order')
-            }, 3000)
       // this.$router.push('/network')
     },
     // 获取站点信息
     getCity () {
-      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' } } ).then((res) => {
+      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' }} ).then((res) => {
         res = res['network-elements']['network-element']
         // console.log(res)
         // this.$store.commit('sourceData', res)
@@ -268,6 +264,23 @@ export default {
               'createTime': this.form.createTime
             }] }, { auth: { username: 'opt', password: '123456' } })
             const id = this.form.noteId
+            if (this.seatSelection === 10) {
+              this.delay = 100
+              this.jitter = 100
+              this.dropRatio = 15
+            } else if (this.seatSelection === 15) {
+              this.delay = 100
+              this.jitter = 100
+              this.dropRatio = 10
+            } else if (this.seatSelection === 20) {
+              this.delay = 30
+              this.jitter = 100
+              this.dropRatio = 10
+            } else {
+              this.delay = 30
+              this.jitter = 30
+              this.dropRatio = 1
+            }
             axios.put('/restconf/config/networkopt-resource-manage:networkResOrders/order/' + id, { 'order': [{
               'orderId': id,
               'sourceAddress': this.start,
@@ -277,10 +290,10 @@ export default {
               'useTime': this.usetime,
               'resourceType': this.modelLabel,
               'quality': this.vpnseat,
-              'delay': '0',
-              'jitter': '0',
-              'drop-ratio': '0',
-              'totalAmount': '1500.00',
+              'delay': this.delay,
+              'jitter': this.jitter,
+              'drop-ratio': this.dropRatio,
+              'totalAmount': '',
               'deletedFlag': '0',
               'processedFlag': '0',
               'createTime': formatter.date(new Date()),
@@ -300,6 +313,7 @@ export default {
 <style lang="less" scoped>
 .content {
   height: 100%;
+  min-width: 1400px;
   background-color: rgb(212, 224, 220);
 }
 .antcard {
