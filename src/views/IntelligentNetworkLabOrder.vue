@@ -1,12 +1,19 @@
 <template>
   <div class="content">
+    <div class="title">信息高铁网络资源预定</div>
     <div class="antcard">
-      <a-card :bordered="false" class="card">
-        <p>信息高铁网络资源预定</p>
-        <a-form :label-col="{ span: 4 }" :wrapper-col="{ span: 18 }" required="true" :model="form">
+      <a-form
+        :label-col="{ span: 6, offset: 1 }"
+        :wrapper-col="{ span: 12 }"
+        required="true"
+        :model="form"
+        labelAlign="left"
+        :colon="false"
+      >
+        <a-card :bordered="false" class="card">
           <a-row>
-            <a-col :span="4">
-              <a-form-item label="出发站" prop="starts">
+            <a-col :span="8">
+              <a-form-item label="出发站" prop="starts" style="text-align: left;padding-right:0px">
                 <a-select v-model="start">
                   <a-select-option
                     v-for="item in starts"
@@ -19,7 +26,7 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="4">
+            <a-col :span="8">
               <a-form-item label="到达站" prop="ends">
                 <a-select v-model="end">
                   <a-select-option
@@ -34,16 +41,24 @@
               </a-form-item>
             </a-col>
             <a-col :span="4">
-              往返 &nbsp;&nbsp;&nbsp;&nbsp; <a-switch default-checked @change="onChange" :checked="isDisabled" />
-            </a-col>
-          </a-row>
-          <a-row>
-            <a-col :span="4">
-              <a-form-item label="带宽Mb">
-                <a-input v-model="num" change="change" type="number"/>
+              <a-form-item label="往返">
+                <a-switch default-checked @change="onChange" :checked="isDisabled" />
               </a-form-item>
             </a-col>
-            <a-col :span="4">
+          </a-row>
+        </a-card>
+        <a-card :bordered="false" class="card">
+          <a-row>
+            <a-col :span="8">
+              <a-form-item label="带宽Mb">
+                <a-input v-model="num" value="" :maxLength="5" onkeyup="if(this.value.length==1){this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+              </a-form-item>
+            </a-col>
+          </a-row>
+        </a-card>
+        <a-card :bordered="false" class="card">
+          <a-row>
+            <a-col :span="8">
               <a-form-item label="使用时间">
                 <a-select @change="timeChange" v-model="usetime" type="number">
                   <a-select-option v-for="date in dates" :key="date.value"> {{ date.label }} </a-select-option>
@@ -51,35 +66,41 @@
               </a-form-item>
             </a-col>
           </a-row>
+        </a-card>
+        <a-card :bordered="false" class="card">
           <a-row>
-            <a-col :span="4">
+            <a-col :span="8">
               <a-form-item label="车型" prop="models">
                 <a-select @change="modelChange" label-in-value>
-                  <a-select-option v-for="model in models" :key="model.value"> {{ model.label }} </a-select-option>
+                  <a-select-option v-for="item in models" :key="item.value"> {{ item.label }} </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
           </a-row>
+        </a-card>
+        <a-card :bordered="false" class="card">
           <a-row>
-            <a-col :span="4">
+            <a-col :span="8">
               <a-form-item label="席位">
-                <a-select style="width: 140%" @change="seatChange" label-in-value>
+                <a-select style="width: 150%" @change="seatChange" label-in-value>
                   <a-select-option v-for="seat in seats" :key="seat.value"> {{ seat.label }} </a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
           </a-row>
-        </a-form>
-      </a-card>
+        </a-card>
+      </a-form>
       <a-card :bordered="false" class="bot">
         <a-row>
-          <a-col :span="24">
-            <div>
-              <!-- <span>费用：<a-checkable-tag style="font-size: 20px">{{ `(${price}+${this.modelSelection}+${this.seatSelection})*${this.dateSelection}` }}</a-checkable-tag></span> -->
-              <span>费用：<a-checkable-tag style="font-size: 20px">{{ `(带宽费用 + 车型 + 席位) * 购买时长` }}</a-checkable-tag></span>
-              <span style="text-align: center; display: block; color: #d9001b">费用总计：<a-checkable-tag style="color: #d9001b; font-size: 20px">{{ ((m + allPrice) * n).toFixed(2) }} </a-checkable-tag>算力豆</span>
-              <a-button class="btn" type="primary" @click="bought"> 立即购买 </a-button>
-            </div>
+          <a-col :span="19" :offset="0" class="left">
+            <a-icon type="info-circle" />
+            <span style="font-size: 16px"> 费用 = {{ `( 带宽费用 + 车型 + 席位 ) × 购买时长` }}</span>
+          </a-col>
+          <a-col :span="3">
+            <span style="text-align: center; display: block; color: #333333">费用总计：<span style="color: #fa7321; font-size:16px"> {{ ((allPrice) * n).toFixed(2) }} </span>算力豆</span>
+          </a-col>
+          <a-col :span="2">
+            <a-button class="btn" type="primary" @click="bought"> 立即购买 </a-button>
           </a-col>
         </a-row>
       </a-card>
@@ -102,13 +123,13 @@ const dates = [
 ]
 const models = [
   { label: '高可靠性（主备链路）', value: 20 },
-  { label: '性价比优（普通链路）', value: 15 }
+  { label: '性价比优（普通链路）', value: 10 }
 ]
 const seats = [
-  { label: '高性价比（时延<100ms、抖动<100ms、丢包率<1.5%）', value: 10 },
+  { label: '高性价比(时延<100ms、抖动<100ms、丢包率<1.5%)', value: 10 },
   { label: '中等质量（时延<100ms）', value: 15 },
   { label: '高质量（时延<30ms）', value: 20 },
-  { label: '超高质量（时延<30ms、抖动<30ms、丢包率<0.1%）', value: 30 }
+  { label: '超高质量(时延<30ms、抖动<30ms、丢包率<0.1%)', value: 30 }
 ]
 export default {
   name: 'Order',
@@ -131,13 +152,13 @@ export default {
       dates,
       models,
       seats,
-      num: '',
+      num: '100',
       dateSelection: '',
       modelSelection: '',
       seatSelection: '',
       isDisabled: false,
-      n: 0.7,
-      m: 0
+      n: 1,
+      timer: 3
     }
   },
   computed: {
@@ -166,65 +187,59 @@ export default {
         return (10 + (this.num - 100) * 0.08).toFixed(2)
       }
       return (82 + (this.num - 1000) * 0.06).toFixed(2)
-    },
-    // node () {
-    //   return this.$store.getters.source
-    // }
+    }
   },
-  // watch: {
-  //   node (_new) {
-  //     this.starts = _new
-  //     this.ends = _new
-  //   }
-  // },
   mounted () {
     this.getCity()
   },
   methods: {
     onChange (checked) {
-      // console.log(`a-switch to ${checked}`)
+      console.log(`a-switch to ${checked}`)
       this.isDisabled = checked
       if (this.isDisabled === true) {
-        this.n = 0.6
-        this.m = this.allPrice
+        this.n = 1.6
       } else {
-        this.n = 0.7
-        this.m = 0
+        this.n = 1
       }
     },
     timeChange (value) {
       this.dateSelection = value
-      // console.log(this.dateSelection)
+      console.log(this.dateSelection)
     },
     // 车型
     modelChange (value) {
       this.modelSelection = value.key
       this.modelLabel = value.label
-      // console.log(value)
+      console.log(value)
     },
     // 席位
     seatChange (value) {
       this.seatSelection = value.key
       this.vpnseat = value.label
-      // console.log(this.seatSelection)
+      console.log(this.seatSelection)
     },
     // 返回network页面
     toNetwork () {
+            setTimeout(() => {
+            //  this.$router.push('/account/order')
+            window.location.href="/account/order"
+            }, 3000)
       // this.$router.push('/network')
     },
     // 获取站点信息
     getCity () {
-      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' }} ).then((res) => {
-        res = res['network-elements']['network-element']
-        // console.log(res)
-        // this.$store.commit('sourceData', res)
-        this.starts = res
-        this.ends = res
+      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' }}).then((res) => {
+        this.starts = res['network-elements']['network-element']
+        this.ends = res['network-elements']['network-element']
       })
     },
     // 点击立即购买
     bought () {
-         axios.post('/portalsystem/order/distributedLaboratoryBed/add', {
+      if (this.num === '' || this.dateSelection === '' || this.start === '' || this.end === '' || this.modelLabel === '' || this.vpnseat === '') {
+        this.$message.error('请填写完整订单再购买')
+        return false
+      } else {
+        axios.post('/portalsystem/order/distributedLaboratoryBed/add', {
             'productId': 17,
             'productName': '智能核心网实验床',
             'typeId': 0,
@@ -253,7 +268,6 @@ export default {
             'isVirtualPrivateNetwork': 1,
             'virtualPrivateNetworkBandwidth': 999
           }).then((res) => {
-            // console.log(res)
             this.form.createTime = formatter.date(new Date())
             this.form.noteId = guid.createGuid()
             axios.put('/restconf/config/networkopt-notification:noteInform/info/' + this.form.noteId, { 'info': [{
@@ -293,47 +307,87 @@ export default {
               'delay': this.delay,
               'jitter': this.jitter,
               'drop-ratio': this.dropRatio,
-              'totalAmount': '',
+              'totalAmount': '1500.00',
               'deletedFlag': '0',
               'processedFlag': '0',
               'createTime': formatter.date(new Date()),
               'updateTime': formatter.date(new Date())
             }] }, { auth: { username: 'opt', password: '123456' } })
-            this.$message.success('购买成功，三秒后跳到订单页')
+            this.$message.success({ content: '购买成功，页面将在3秒后跳转...', key: 'key', duration: 2 })
             setTimeout(() => {
-             // this.$router.push('/account/order')
-              window.location.href = '/account/order'
-            }, 3000)
+              // this.timer = 2
+              this.$message.success({ content: '购买成功，页面将在2秒后跳转...', key: 'key', duration: 2 })
+              setTimeout(() => {
+                // this.timer = 1
+                this.$message.success({ content: '购买成功，页面将在1秒后跳转...', key: 'key', duration: 2 })
+                setTimeout(() => {
+                  // this.timer = 0
+                  // this.$router.push('/account/order')
+                  window.location.href='/account/order'
+                }, 1000)
+              }, 1000)
+            }, 1000)
           })
+      }
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.ant-form label{
+  font-size: 16px;
+}
+.ant-form-item{
+  margin-bottom: 0px;
+}
+.ant-form-item-label{
+  text-align: left;
+  padding-right: 20px;
+}
+.title {
+  font-size: 20px;
+  line-height: 20px;
+  color: #333;
+  padding: 30px;
+}
 .content {
+  padding: 0 30px;
   height: 100%;
-  min-width: 1400px;
-  background-color: rgb(212, 224, 220);
+  min-width: 1800px;
+  background-color: #F0F2F5;
 }
-.antcard {
-  p {
-    height: 60px;
-    line-height: 60px;
-    font-size: 30px;
-    color: #000;
-  }
-}
+
 .card {
-  margin: 0 30px;
+  min-width: 1800px;
+  margin: 8px 0;
 }
 .btn {
   float: right;
   margin-left: 20px;
 }
 .bot {
-  font-size: 20px;
+  min-width: 1800px;
+  font-size: 16px;
   background-color: #fff;
-  margin: 30px;
+  margin: 8px 0;
+}
+.bot span{
+  font-size: 16px;
+}
+/deep/ .ant-form label {
+    font-size: 16px;
+}
+// .ant-form-item label{
+//   margin-right: 10px;
+//   width: 50px;
+// }
+/deep/ .ant-btn-primary {
+  background-color: #33b0ed;
+  border-color: #33b0ed;
+  width: 140px;
+}
+.left{
+  padding-left: 28px;
 }
 </style>
