@@ -1,0 +1,36 @@
+stages:
+  - build
+  - deploy
+
+package:
+  artifacts:
+    paths:
+      - dist/
+  stage: build
+  cache:
+    key: "SubsystemNPM"
+    paths:
+      - node_modules/
+  script:
+    - npm install
+    - npm run build
+  tags:
+    - docker
+  only:
+    - deploy
+
+deployment:
+  stage: deploy
+  before_script:
+    - CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHA::8}
+    - CUR_PATH=/home/isbahn-subsystem-test
+    - APP_NAME=bed_hxw
+  script:
+    - test ! -d $CUR_PATH/dist/sub/$APP_NAME || sudo rm -rf $CUR_PATH/dist/sub/$APP_NAME
+    - sudo cp -rf dist $CUR_PATH
+    - cd $CUR_PATH
+    - sudo sh start.sh
+  tags:
+    - shell
+  only:
+    - deploy
