@@ -228,7 +228,7 @@ export default {
     },
     // 获取站点信息
     getCity () {
-      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' }}).then((res) => {
+      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' }} ).then((res) => {
         this.starts = res['network-elements']['network-element']
         this.ends = res['network-elements']['network-element']
       })
@@ -240,7 +240,7 @@ export default {
         return false
       } else {
         axios.post('/portalsystem/order/distributedLaboratoryBed/add', {
-            'productId': 17,
+            'productId': 18,
             'productName': '智能核心网实验床',
             'typeId': 0,
             'chargeType': 0,
@@ -262,71 +262,75 @@ export default {
             'name': this.start + '<---->' + this.end,
             'purchaseTime': this.usetime,
             'configInfo': '出发站：' + this.start + '--到达站：' + this.end + '带宽：' + this.num + '车型' + this.modelLabel + '席位' + this.vpnseat,
-            'price': this.m + this.allPrice * this.n,
-            'transactionInfo': '费用:' + this.m + this.allPrice * this.n,
+            'price': this.allPrice * this.n,
+            'transactionInfo': '费用:' + this.allPrice * this.n,
             'productTotalNumber': 1,
             'isVirtualPrivateNetwork': 1,
             'virtualPrivateNetworkBandwidth': 999
           }).then((res) => {
-            this.form.createTime = formatter.date(new Date())
-            this.form.noteId = guid.createGuid()
-            axios.put('/restconf/config/networkopt-notification:noteInform/info/' + this.form.noteId, { 'info': [{
-              'noteId': this.form.noteId,
-              'msgType': '带宽资源申请',
-              'readFlag': '0',
-              'deletedFlag': '0',
-              'createTime': this.form.createTime
-            }] }, { auth: { username: 'opt', password: '123456' } })
-            const id = this.form.noteId
-            if (this.seatSelection === 10) {
-              this.delay = 100
-              this.jitter = 100
-              this.dropRatio = 15
-            } else if (this.seatSelection === 15) {
-              this.delay = 100
-              this.jitter = 100
-              this.dropRatio = 10
-            } else if (this.seatSelection === 20) {
-              this.delay = 30
-              this.jitter = 100
-              this.dropRatio = 10
+            if (res.statusCode !== 200) {
+               this.$message.error(res.message)
             } else {
-              this.delay = 30
-              this.jitter = 30
-              this.dropRatio = 1
-            }
-            axios.put('/restconf/config/networkopt-resource-manage:networkResOrders/order/' + id, { 'order': [{
-              'orderId': id,
-              'sourceAddress': this.start,
-              'targetAddress': this.end,
-              'if-bidirectional': this.isDisabled,
-              'bandWidth': this.num,
-              'useTime': this.usetime,
-              'resourceType': this.modelLabel,
-              'quality': this.vpnseat,
-              'delay': this.delay,
-              'jitter': this.jitter,
-              'drop-ratio': this.dropRatio,
-              'totalAmount': '1500.00',
-              'deletedFlag': '0',
-              'processedFlag': '0',
-              'createTime': formatter.date(new Date()),
-              'updateTime': formatter.date(new Date())
-            }] }, { auth: { username: 'opt', password: '123456' } })
-            this.$message.success({ content: '购买成功，页面将在3秒后跳转...', key: 'key', duration: 2 })
-            setTimeout(() => {
-              // this.timer = 2
-              this.$message.success({ content: '购买成功，页面将在2秒后跳转...', key: 'key', duration: 2 })
+              this.form.createTime = formatter.date(new Date())
+              this.form.noteId = guid.createGuid()
+              axios.put('/restconf/config/networkopt-notification:noteInform/info/' + this.form.noteId, { 'info': [{
+                'noteId': this.form.noteId,
+                'msgType': '带宽资源申请',
+                'readFlag': '0',
+                'deletedFlag': '0',
+                'createTime': this.form.createTime
+              }] }, { auth: { username: 'opt', password: '123456' } })
+              const id = this.form.noteId
+              if (this.seatSelection === 10) {
+                this.delay = 100
+                this.jitter = 100
+                this.dropRatio = 15
+              } else if (this.seatSelection === 15) {
+                this.delay = 100
+                this.jitter = 100
+                this.dropRatio = 10
+              } else if (this.seatSelection === 20) {
+                this.delay = 30
+                this.jitter = 100
+                this.dropRatio = 10
+              } else {
+                this.delay = 30
+                this.jitter = 30
+                this.dropRatio = 1
+              }
+              axios.put('/restconf/config/networkopt-resource-manage:networkResOrders/order/' + id, { 'order': [{
+                'orderId': id,
+                'sourceAddress': this.start,
+                'targetAddress': this.end,
+                'if-bidirectional': this.isDisabled,
+                'bandWidth': this.num,
+                'useTime': this.usetime,
+                'resourceType': this.modelLabel,
+                'quality': this.vpnseat,
+                'delay': this.delay,
+                'jitter': this.jitter,
+                'drop-ratio': this.dropRatio,
+                'totalAmount': '1500.00',
+                'deletedFlag': '0',
+                'processedFlag': '0',
+                'createTime': formatter.date(new Date()),
+                'updateTime': formatter.date(new Date())
+              }] }, { auth: { username: 'opt', password: '123456' } })
+              this.$message.success({ content: '购买成功，页面将在3秒后跳转...', key: 'key', duration: 2 })
               setTimeout(() => {
-                // this.timer = 1
-                this.$message.success({ content: '购买成功，页面将在1秒后跳转...', key: 'key', duration: 2 })
+                // this.timer = 2
+                this.$message.success({ content: '购买成功，页面将在2秒后跳转...', key: 'key', duration: 2 })
                 setTimeout(() => {
-                  // this.timer = 0
+                  // this.timer = 1
+                  this.$message.success({ content: '购买成功，页面将在1秒后跳转...', key: 'key', duration: 2 })
+                  setTimeout(() => {
+                    // this.timer = 0
                   // this.$router.push('/account/order')
                   window.location.href='/account/order'
                 }, 1000)
               }, 1000)
             }, 1000)
+            }
           })
       }
     }
