@@ -35,7 +35,7 @@ const baseUrl = process.env.VUE_APP_BASE_URL
 const port = 6062
 // vue.config.js
 const vueConfig = {
-  outputDir: '../temp/dist' + baseUrl,
+  outputDir: 'dist' + baseUrl,
   // publicPath: isProd ? baseUrl : '/',
   publicPath: baseUrl,
   pwa: {
