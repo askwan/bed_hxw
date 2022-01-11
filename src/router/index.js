@@ -16,8 +16,8 @@ const isProd = process.env.NODE_ENV === 'production'
 const baseUrl = process.env.VUE_APP_BASE_URL
 
 export default new Router({
-  // base: window.__POWERED_BY_QIANKUN__ ? baseUrl : '/child/' + baseUrl.split('/sub/')[1],
-  base: baseUrl,
+  base: window.__POWERED_BY_QIANKUN__ ? '/sub' + baseUrl : '/child' + baseUrl,
+  // base: baseUrl,
   mode: 'history',
   routes: constantRouterMap,
   // eslint-disable-next-line

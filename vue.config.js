@@ -11,7 +11,7 @@ function resolve(dir) {
 // eslint-disable-next-line
 const isProd = process.env.NODE_ENV === 'production'
 const baseUrl = process.env.VUE_APP_BASE_URL
-// const publicPath = '/child/' + baseUrl.split('/sub/')[1]
+const publicPath = '/child' + baseUrl
 // const baseUrl = '/'
 
 // const assetsCDN = {
@@ -35,9 +35,9 @@ const baseUrl = process.env.VUE_APP_BASE_URL
 const port = 6062
 // vue.config.js
 const vueConfig = {
-  outputDir: 'dist' + baseUrl,
+  outputDir: 'dist' + publicPath,
   // publicPath: isProd ? baseUrl : '/',
-  publicPath: baseUrl,
+  publicPath: publicPath,
   pwa: {
     iconPaths: {
       favicon32: 'favicon.ico',

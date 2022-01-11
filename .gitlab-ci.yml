@@ -26,7 +26,7 @@ deployment:
     - CUR_PATH=/home/isbahn-subsystem-test
     - APP_NAME=bed_hxw
   script:
-    - test ! -d $CUR_PATH/dist/sub/$APP_NAME || sudo rm -rf $CUR_PATH/dist/sub/$APP_NAME
+    - test ! -d $CUR_PATH/dist/child/$APP_NAME || sudo rm -rf $CUR_PATH/dist/child/$APP_NAME
     - sudo cp -rf dist $CUR_PATH
     - cd $CUR_PATH
     - sudo sh start.sh
