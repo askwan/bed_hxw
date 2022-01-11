@@ -97,7 +97,7 @@
             <span style="font-size: 16px"> 费用 = {{ `( 带宽费用 + 车型 + 席位 ) × 购买时长` }}</span>
           </a-col>
           <a-col :span="3">
-            <span style="text-align: center; display: block; color: #333333">费用总计：<span style="color: #fa7321; font-size:16px"> {{ ((allPrice) * n).toFixed(2) }} </span>算力豆</span>
+            <span style="text-align: center; display: block; color: #333333">费用总计：<span style="color: #fa7321; font-size:16px"> {{ ((allPrice) * n).toFixed(2) }}</span>算力豆/折扣价：<span style="color: #fa7321; font-size:16px"> 0 </span>算力豆(折扣-100%)</span>
           </a-col>
           <a-col :span="2">
             <a-button class="btn" type="primary" @click="bought"> 立即购买 </a-button>
@@ -262,7 +262,7 @@ export default {
             'name': this.start + '<---->' + this.end,
             'purchaseTime': this.usetime,
             'configInfo': '出发站：' + this.start + '--到达站：' + this.end + '带宽：' + this.num + '车型' + this.modelLabel + '席位' + this.vpnseat,
-            'price': this.allPrice * this.n,
+            'price': 0,
             'transactionInfo': '费用:' + this.allPrice * this.n,
             'productTotalNumber': 1,
             'isVirtualPrivateNetwork': 1,
