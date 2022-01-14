@@ -228,7 +228,7 @@ export default {
     },
     // 获取站点信息
     getCity () {
-      axios.get('/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' }} ).then((res) => {
+      axios.get('/bed_hxw/restconf/config/networkopt-node-inventory:network-elements', { auth: { username: 'opt', password: '123456' }} ).then((res) => {
         this.starts = res['network-elements']['network-element']
         this.ends = res['network-elements']['network-element']
       })
