@@ -1,6 +1,7 @@
 import router from './router'
 import store from './store'
-import storage from 'store'
+// import storage from 'store'
+import cookies from 'js-cookie'
 import NProgress from 'nprogress' // progress bar
 import '@/components/NProgress/nprogress.less' // progress bar custom style
 // import notification from 'ant-design-vue/es/notification'
@@ -33,7 +34,26 @@ router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   to.meta && typeof to.meta.title !== 'undefined' && setDocumentTitle(`${i18nRender(to.meta.title)} - ${domTitle}`)
   /* has token */
-  if (storage.get(ACCESS_TOKEN)) {
+
+  let hasToken = store.getters.token
+  if (sessionStorage.getItem(ACCESS_TOKEN)) {
+    hasToken = sessionStorage.getItem(ACCESS_TOKEN)
+  } else if (cookies.get(ACCESS_TOKEN)) {
+    hasToken = cookies.get(ACCESS_TOKEN)
+    store.commit('SET_TOKEN', hasToken)
+  }
+  // if (storage.get(ACCESS_TOKEN)) {
+  //   hasToken = storage.get(ACCESS_TOKEN)
+  // } else if (cookies.get(ACCESS_TOKEN)) {
+  //   hasToken = cookies.get(ACCESS_TOKEN)
+  //   store.commit('SET_TOKEN', hasToken)
+  // }
+  if (hasToken === 'undefined') {
+    hasToken = ''
+  }
+
+
+  if (hasToken) {
     if (to.path === setTokenPath) {
       next({ path: defaultRoutePath })
       NProgress.done()
