@@ -252,8 +252,8 @@ export default {
                 'mirroringId': 7000,
                 'isAllocatedIP': 0,
                 'networkNumber': 1,
-                'networkBandwidth': this.num,
-                'productNumber': 1
+                'networkBandwidth': Number(this.num),
+                'serverNumber': 1
               }
             ],
             'storageTypeId': 22,
@@ -266,7 +266,9 @@ export default {
             'transactionInfo': '费用:' + this.allPrice * this.n,
             'productTotalNumber': 1,
             'isVirtualPrivateNetwork': 1,
-            'virtualPrivateNetworkBandwidth': 999
+            'virtualPrivateNetworkBandwidth': 999,
+            'bandWidthFee': 0,
+            'configFee': 0
           }).then((res) => {
             if (res.statusCode !== 200) {
                this.$message.error(res.message)
