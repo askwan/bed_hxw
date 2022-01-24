@@ -275,7 +275,7 @@ export default {
             } else {
               this.form.createTime = formatter.date(new Date())
               this.form.noteId = guid.createGuid()
-              axios.put('/restconf/config/networkopt-notification:noteInform/info/' + this.form.noteId, { 'info': [{
+              axios.put('/bed_hxw/restconf/config/networkopt-notification:noteInform/info/' + this.form.noteId, { 'info': [{
                 'noteId': this.form.noteId,
                 'msgType': '带宽资源申请',
                 'readFlag': '0',
@@ -300,7 +300,7 @@ export default {
                 this.jitter = 30
                 this.dropRatio = 1
               }
-              axios.put('/restconf/config/networkopt-resource-manage:networkResOrders/order/' + id, { 'order': [{
+              axios.put('/bed_hxw/restconf/config/networkopt-resource-manage:networkResOrders/order/' + id, { 'order': [{
                 'orderId': id,
                 'sourceAddress': this.start,
                 'targetAddress': this.end,
