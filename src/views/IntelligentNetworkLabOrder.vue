@@ -239,41 +239,6 @@ export default {
         this.$message.error('请填写完整订单再购买')
         return false
       } else {
-        axios.post('/portalsystem/order/distributedLaboratoryBed/add', {
-            'payType': 9,
-            'productId': 18,
-            'productName': '智能核心网实验床',
-            'typeId': 0,
-            'chargeType': 0,
-            'stationInfoList': [
-              {
-                'stationId': 100,
-                'stationName': this.start + '<---->' + this.end,
-                'specConfigId': 7000,
-                'mirroringId': 7000,
-                'isAllocatedIP': 0,
-                'networkNumber': 1,
-                'networkBandwidth': Number(this.num),
-                'serverNumber': 1
-              }
-            ],
-            'storageTypeId': 22,
-            'storageTypeName': 'SSD',
-            'storageCapacity': 23,
-            'name': this.start + '<---->' + this.end,
-            'purchaseTime': this.usetime,
-            'configInfo': '出发站：' + this.start + '--到达站：' + this.end + '带宽：' + this.num + '车型' + this.modelLabel + '席位' + this.vpnseat,
-            'price': 0,
-            'transactionInfo': '费用:' + this.allPrice * this.n,
-            'productTotalNumber': 1,
-            'isVirtualPrivateNetwork': 1,
-            'virtualPrivateNetworkBandwidth': 999,
-            'bandWidthFee': 0,
-            'configFee': 0
-          }).then((res) => {
-            if (res.statusCode !== 200) {
-               this.$message.error(res.message)
-            } else {
               this.form.createTime = formatter.date(new Date())
               this.form.noteId = guid.createGuid()
               axios.put('/bed_hxw/restconf/config/networkopt-notification:noteInform/info/' + this.form.noteId, { 'info': [{
@@ -334,8 +299,7 @@ export default {
               }, 1000)
             }, 1000)
             }
-          })
-      }
+          
     }
   }
 }
