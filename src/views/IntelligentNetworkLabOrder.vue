@@ -240,6 +240,7 @@ export default {
         return false
       } else {
         axios.post('/portalsystem/order/distributedLaboratoryBed/add', {
+            'payType': 9,
             'productId': 18,
             'productName': '智能核心网实验床',
             'typeId': 0,
