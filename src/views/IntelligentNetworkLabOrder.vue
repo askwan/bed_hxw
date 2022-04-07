@@ -239,7 +239,7 @@ export default {
         this.$message.error('请填写完整订单再购买')
         return false
       } else {
-        axios.post('/api/portalsystem/order/distributedLaboratoryBed/add', {
+        axios.post('/api/portalsystem/order/laboratoryBed/add', {
                productId: 18,
             productName: '智能核心网实验床',
             'typeId': 0,
