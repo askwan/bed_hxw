@@ -239,15 +239,34 @@ export default {
         this.$message.error('请填写完整订单再购买')
         return false
       } else {
+        axios.post('/api/portalsystem/order/distributedLaboratoryBed/add', {
+               productId: 18,
+            productName: '智能核心网实验床',
+            'typeId': 0,
+            productNumber: 1,
+            chargeType: 2,
+            purchaseTime: this.usetime,
+            'price': 0,
+            'configInfo': { '出发站': this.start, '到达站': this.end, '带宽': this.num, '车型': this.modelLabel, '席位': this.vpnseat },
+            'transactionInfo': { '规格费用': 0, '存储费用': 0, '宽带费用': 0, '合计费用:': this.allPrice * this.n },
+            productInstanceId: '',
+            payCallback: 'http://192.168.107.6:31404/account/order?orderStatus=1',
+            addressInfo: 'http://192.168.107.6:31404/sub/bed_hxw/networklaborder'
+          }).then((res) => {
+            if (res.statusCode !== 200) {
+               this.$message.error(res.message)
+            } else {
               this.form.createTime = formatter.date(new Date())
               this.form.noteId = guid.createGuid()
-              axios.put('/bed_hxw/restconf/config/networkopt-notification:noteInform/info/' + this.form.noteId, { 'info': [{
-                'noteId': this.form.noteId,
-                'msgType': '带宽资源申请',
-                'readFlag': '0',
-                'deletedFlag': '0',
-                'createTime': this.form.createTime
-              }] }, { auth: { username: 'opt', password: '123456' } })
+              axios.post('/bed_hxw/restconf/operations/networkopt-notification-new:note-inform', { 'input': {
+                'info': [{
+                    'deletedFlag': '0',
+                    'readFlag': '0',
+                    'createTime': this.form.createTime,
+                    'noteId': this.form.noteId,
+                    'msgType': '带宽资源申请'
+                }]
+              } }, { auth: { username: 'opt', password: '123456' } })
               const id = this.form.noteId
               if (this.seatSelection === 10) {
                 this.delay = 100
@@ -266,24 +285,28 @@ export default {
                 this.jitter = 30
                 this.dropRatio = 1
               }
-              axios.put('/bed_hxw/restconf/config/networkopt-resource-manage:networkResOrders/order/' + id, { 'order': [{
-                'orderId': id,
-                'sourceAddress': this.start,
-                'targetAddress': this.end,
-                'if-bidirectional': this.isDisabled,
-                'bandWidth': this.num,
-                'useTime': this.usetime,
-                'resourceType': this.modelLabel,
-                'quality': this.vpnseat,
-                'delay': this.delay,
-                'jitter': this.jitter,
-                'drop-ratio': this.dropRatio,
-                'totalAmount': '1500.00',
-                'deletedFlag': '0',
-                'processedFlag': '0',
-                'createTime': formatter.date(new Date()),
-                'updateTime': formatter.date(new Date())
-              }] }, { auth: { username: 'opt', password: '123456' } })
+              axios.post('/bed_hxw/restconf/operations/networkopt-resource-manage-new:network-res-orders', {  'input': {
+                'order': [{
+                  'orderId': id,
+                  'sourceAddress': this.start,
+                  'targetAddress': this.end,
+                  'if-bidirectional': this.isDisabled,
+                  'bandWidth': this.num,
+                  'useTime': this.usetime,
+                  'resourceType': this.modelLabel,
+                  'quality': this.vpnseat,
+                  'delay': this.delay,
+                  'jitter': this.jitter,
+                  'drop-ratio': this.dropRatio,
+                  'totalAmount': '1500.00',
+                  'deletedFlag': '0',
+                  'processedFlag': '0',
+                  'createTime': formatter.date(new Date()),
+                  'updateTime': formatter.date(new Date()),
+                  'sourceId': this.sourceId,
+                  'targetId': this.targetId
+                }]
+              } }, { auth: { username: 'opt', password: '123456' } })
               this.$message.success({ content: '购买成功，页面将在3秒后跳转...', key: 'key', duration: 2 })
               setTimeout(() => {
                 // this.timer = 2
@@ -299,7 +322,8 @@ export default {
               }, 1000)
             }, 1000)
             }
-          
+          })
+      }
     }
   }
 }
