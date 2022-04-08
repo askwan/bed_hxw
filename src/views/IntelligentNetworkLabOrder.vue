@@ -239,7 +239,7 @@ export default {
         this.$message.error('请填写完整订单再购买')
         return false
       } else {
-        axios.post('/portalsystem/order/laboratoryBed/add', {
+        axios.post('/portalsystem/order/laboratoryBed/add', [{
                productId: 18,
             productName: '智能核心网实验床',
             'typeId': 0,
@@ -252,7 +252,7 @@ export default {
             productInstanceId: '',
             payCallback: 'http://192.168.107.6:31404/account/order?orderStatus=1',
             addressInfo: 'http://192.168.107.6:31404/sub/bed_hxw/networklaborder'
-          }).then((res) => {
+          }]).then((res) => {
             if (res.statusCode !== 200) {
                this.$message.error(res.message)
             } else {
