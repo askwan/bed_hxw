@@ -17,24 +17,29 @@
           </div>
         </div>
         <div class="head_user">
+          <right-info
+            :currentUser="currentUser"
+            :menu="showMenu"
+            :marginRightConsole="marginRightConsole"
+            :fontSize="fontSize"
+          ></right-info>
         </div>
       </div>
     </div>
-    <div id="top" class="content_main">
-      <router-view />
-    </div>
-    <!-- <global-footer /> -->
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 // import { constantRouterMap } from '@/config/router.config'
-// import RightInfo from '@/components/FixedUser/RightInfo'
-// import GlobalFooter from '@/components/FixedUser/GlobalFooter'
+import RightInfo from '@/components/FixedUser/RightInfo'
+import GlobalFooter from '@/components/FixedUser/GlobalFooter'
 import { mapState } from 'vuex'
 export default {
   name: 'FixedLayout',
   components: {
+    RightInfo,
+    GlobalFooter,
   },
   data() {
     return {
@@ -79,7 +84,6 @@ export default {
   computed: {
     ...mapState({
       // 动态主路由
-      // eslint-disable-next-line
       currentUser: (state) => state.user.info,
     }),
   },
@@ -100,7 +104,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '../components/index.less';
+// @import '../components/index.less';
+@import '../../../components/index.less';
 .layout_main {
   min-width: 1640px;
   min-height: 100vh;
@@ -128,7 +133,7 @@ export default {
   min-height: calc(100vh - 98px);
 }
 .head_fixed {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 100;
@@ -195,10 +200,10 @@ export default {
   .hover_header {
     display: none;
     background-color: #273865;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
-    line-height: 12px;
+    line-height: 14px;
     letter-spacing: 0px;
     color: #ffffff;
     padding: 4px 0px;
@@ -224,7 +229,7 @@ export default {
     height: 100%;
     line-height: 60px;
     margin: 0 24px;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     color: #fff;
     word-break: keep-all; /* 不换行 */
@@ -234,7 +239,7 @@ export default {
     }
     .custom_icon {
       position: relative;
-      font-size: 14px;
+      font-size: 16px;
       margin-left: 1px;
       display: inline-block;
     }

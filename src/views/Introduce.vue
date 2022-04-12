@@ -1,9 +1,5 @@
 <template>
-  <div class="network-intro">
-    <div style="height: 50px;width: 100%">
-      <img src="@/assets/intelligent-network-lab-imgs/nav.png" alt style="width:100%;">
-    </div>
-
+  <div class="fill introduce network-intro">
     <div class="banner">
       <div class="page-width p20">
         <a-row>
@@ -18,7 +14,6 @@
         </a-row>
       </div>
     </div>
-
     <div class="page-width p20 bg-white">
       <div class="subtitle">
         <span>-</span>
@@ -35,7 +30,7 @@
             <div class="tx-card">
               <div class="tx-content">
                 <div class="tx-icon">
-                  <img src="@/assets/intelligent-network-lab-imgs/network_feature_1.png" alt>
+                  <img src="@/assets/intelligent-network-lab-imgs/network_feature_1.png" alt />
                 </div>
                 <div class="tx-title">网络状况可感知</div>
                 <div class="tx-des">采用SDN网络状态动态感知技术，基于主动、被动测量技术实现实时感知链路状态</div>
@@ -46,7 +41,7 @@
             <div class="tx-card">
               <div class="tx-content">
                 <div class="tx-icon">
-                  <img src="@/assets/intelligent-network-lab-imgs/network_feature_2.png" alt>
+                  <img src="@/assets/intelligent-network-lab-imgs/network_feature_2.png" alt />
                 </div>
                 <div class="tx-title">业务需求可定制</div>
                 <div class="tx-des">对不同类型的应用提供不同QOS服务保障</div>
@@ -57,10 +52,12 @@
             <div class="tx-card">
               <div class="tx-content">
                 <div class="tx-icon">
-                  <img src="@/assets/intelligent-network-lab-imgs/network_feature_3.png" alt>
+                  <img src="@/assets/intelligent-network-lab-imgs/network_feature_3.png" alt />
                 </div>
                 <div class="tx-title">数据平面可编程</div>
-                <div class="tx-des">数据平面通过SRv6隧道、网络切片等技术实现网络虚拟化和数据平面可编程，基于智能可编程路由器提高网络功能定制开发能力</div>
+                <div class="tx-des">
+                  数据平面通过SRv6隧道、网络切片等技术实现网络虚拟化和数据平面可编程，基于智能可编程路由器提高网络功能定制开发能力
+                </div>
               </div>
             </div>
           </a-col>
@@ -77,7 +74,7 @@
     </div>
 
     <div class="jg-img">
-      <img src="@/assets/intelligent-network-lab-imgs/network_frame.png" alt>
+      <img src="@/assets/intelligent-network-lab-imgs/network_frame.png" alt="图片" />
     </div>
 
     <div class="page-width p20 bg-white" style="padding-bottom: 100px">
@@ -86,42 +83,38 @@
         <span style="margin: 0 40px">应用场景</span>
         <span>-</span>
       </div>
-      <a-row style="margin-left: -10px; margin-right: -10px;">
-        <a-col :span="8" style="padding-left: 10px; padding-right: 10px;">
+      <a-row style="margin-left: -10px; margin-right: -10px">
+        <a-col :span="8" style="padding-left: 10px; padding-right: 10px">
           <div class="cj-card">
-            <img src="@/assets/intelligent-network-lab-imgs/network_scene_1.png" alt>
+            <img src="@/assets/intelligent-network-lab-imgs/network_scene_1.png" alt />
             <div class="cj-title">5G应用实验</div>
           </div>
         </a-col>
-        <a-col :span="8" style="padding-left: 10px; padding-right: 10px;">
+        <a-col :span="8" style="padding-left: 10px; padding-right: 10px">
           <div class="cj-card">
-            <img src="@/assets/intelligent-network-lab-imgs/network_scene_2.png" alt>
+            <img src="@/assets/intelligent-network-lab-imgs/network_scene_2.png" alt />
             <div class="cj-title">广域网优化实验</div>
           </div>
         </a-col>
-        <a-col :span="8" style="padding-left: 10px; padding-right: 10px;">
+        <a-col :span="8" style="padding-left: 10px; padding-right: 10px">
           <div class="cj-card">
-            <img src="@/assets/intelligent-network-lab-imgs/network_scene_3.png" alt>
+            <img src="@/assets/intelligent-network-lab-imgs/network_scene_3.png" alt />
             <div class="cj-title">可控数据传输实验</div>
           </div>
         </a-col>
       </a-row>
     </div>
-
   </div>
 </template>
-
 <script>
 export default {
-  name: 'IntelligentNetworkLabIntro',
   methods: {
-    toOrder () {
-      this.$router.push('/networklaborder')
-    }
-  }
+    toOrder() {
+      this.$router.push({ name: 'bed_source', query: { productId: 18, productName: '智能核心网实验床' } })
+    },
+  },
 }
 </script>
-
 <style lang="less" scoped>
 .network-intro {
   //padding-top: 60px;
@@ -131,7 +124,7 @@ export default {
 .banner {
   width: 100%;
   height: 350px;
-  background: url("~@/assets/intelligent-network-lab-imgs/network_banner.png") no-repeat center;
+  background: url('~@/assets/intelligent-network-lab-imgs/network_banner.png') no-repeat center;
   color: white;
 
   .banner-title {
@@ -187,13 +180,13 @@ export default {
 }
 
 .subtitle-description {
-  font-size: 16px
+  font-size: 16px;
 }
 
 .tx-card {
   width: 450px;
   height: 450px;
-  background: url("~@/assets/intelligent-network-lab-imgs/tx-card.png") no-repeat;
+  background: url('~@/assets/intelligent-network-lab-imgs/tx-card.png') no-repeat;
   background-size: 100%;
   padding-top: 60px;
   position: relative;
@@ -254,5 +247,44 @@ export default {
     vertical-align: middle;
     border-style: none;
   }
+}
+
+.fill {
+  width: 100%;
+  height: 100%;
+}
+.left-bar {
+  width: 160px;
+  flex-shrink: 0;
+  background: #fff;
+  position: fixed;
+  z-index: 101;
+  top: 60px;
+  left: 0px;
+  bottom: 0;
+  height: 100%;
+}
+.introduce {
+  background: #fff;
+  padding: 0px;
+}
+.introduce-title {
+  color: #333;
+  font-weight: 500;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+.introduce-des {
+  font-weight: 400;
+  line-height: 32px;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+.btn-group {
+  margin-bottom: 30px;
+}
+.map {
+  height: calc(100% - 220px);
+  // background: red;
 }
 </style>
