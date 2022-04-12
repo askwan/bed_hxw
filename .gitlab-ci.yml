@@ -24,7 +24,7 @@ deployment:
   before_script:
     - CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHA::8}
     - CUR_PATH=/home/isbahn-subsystem-test
-    - APP_NAME=bed_hxw
+    - APP_NAME=bed1
   script:
     - test ! -d $CUR_PATH/dist/child/$APP_NAME || sudo rm -rf $CUR_PATH/dist/child/$APP_NAME
     - sudo cp -rf dist $CUR_PATH

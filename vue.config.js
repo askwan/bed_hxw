@@ -11,6 +11,7 @@ function resolve(dir) {
 // eslint-disable-next-line
 const isProd = process.env.NODE_ENV === 'production'
 const baseUrl = process.env.VUE_APP_BASE_URL
+const appName = baseUrl.substring(1, baseUrl.length - 1)
 const publicPath = '/child' + baseUrl
 // const baseUrl = '/'
 
@@ -61,7 +62,7 @@ const vueConfig = {
     // externals: isProd ? assetsCDN.externals : {},
     output: {
       // 把子应用打包成 umd 库格式
-      library: `${name}-[bed1]`,
+      library: `${name}-[${appName}]`,
       libraryTarget: 'umd',
       jsonpFunction: `webpackJsonp_${name}`
     }
@@ -117,13 +118,15 @@ const vueConfig = {
           '^/api/bed_hxw/restconf': ''
         }
       },
-      // ===================================智能核心网===================
+      // ===================================示例接口===================
+      // ===================================oneItLab接口===================
       '/api': {
         // target: 'http://172.16.31.11',
-        target: 'http://192.168.107.2:30170',
+        target: 'http://192.168.107.6:31402',
         ws: false,
         changeOrigin: true
       },
+      // ===================================oneItLab接口===================
     },
     headers: {
       'Access-Control-Allow-Origin': '*' // 主应用获取子应用时跨域响应头
