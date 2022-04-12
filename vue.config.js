@@ -110,11 +110,11 @@ const vueConfig = {
     port,
     proxy: {
       // ===================================智能核心网===================
-      '/restconf': {
-        target: 'http://157.0.19.2:10541/restconf',
+      '/api/bed_hxw/restconf': {
+        target: 'http://157.0.19.2:10541/api/bed_hxw/restconf',
         changeOrigin: true,
         pathRewrite: {
-          '^/restconf': ''
+          '^/api/bed_hxw/restconf': ''
         }
       },
       // ===================================智能核心网===================
