@@ -349,12 +349,12 @@ export default {
 .content {
   padding: 0 30px;
   height: 100%;
-  min-width: 1800px;
+  min-width: 1500px;
   background-color: #F0F2F5;
 }
 
 .card {
-  min-width: 1800px;
+  min-width: 1500px;
   margin: 8px 0;
 }
 .btn {
@@ -362,7 +362,7 @@ export default {
   margin-left: 20px;
 }
 .bot {
-  min-width: 1800px;
+  min-width: 1500px;
   font-size: 16px;
   background-color: #fff;
   margin: 8px 0;
