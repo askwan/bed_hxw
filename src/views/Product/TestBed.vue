@@ -246,7 +246,9 @@ export default {
             productInstanceId: '',
             payCallback: 'http://192.168.107.6:31404/account/order?orderStatus=1',
             addressInfo: 'http://192.168.107.6:31404/sub/bed_hxw/networklaborder'
-          }]).then((res) => {
+          }],{
+            headers: { 'Authorization': 'eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ0d3kxMjMiLCJ1c2VySWQiOiI3MzciLCJuYW1lIjoi55Sw5paH5riKIiwiaWQiOiJNZEpueU5aTSIsImV4cCI6MTY1MDQ1MTI0Mn0.ZPKLU_nRq8B3XW3g1FA4yZTvGuDzEzJun9cQvKcuW5mNxLCGpQToKbJ2qypHF6wgRiJojlwPolUZWyzhNvKyTjWcYtFh3B2F8IFg2gGs3XEPVDvvRNpXzN4MtzI14TmlHWx6BkET8Cf7dFYox1Ug869ZyHRK2zXTi7dzGPuDwKY' }
+          }).then((res) => {
             if (res.statusCode !== 200) {
                this.$message.error(res.message)
             } else {
@@ -377,7 +379,7 @@ export default {
   padding-left: 28px;
 }
 .bottom{
-  width: 550px;
+  width: 560px;
   float: right;
 }
 </style>
