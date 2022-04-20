@@ -247,8 +247,8 @@ export default {
             chargeType: 2,
             purchaseTime: this.usetime,
             'price': 0,
-            'configInfo': [{ '出发站': this.start, '到达站': this.end, '带宽': this.num, '车型': this.modelLabel, '席位': this.vpnseat }],
-            'transactionInfo': { '规格费用': 0, '存储费用': 0, '宽带费用': 0, '合计费用:': this.allPrice * this.n },
+            'configInfo': JSON.stringify([{ '出发站': this.start, '到达站': this.end, '带宽': this.num, '车型': this.modelLabel, '席位': this.vpnseat }]),
+            'transactionInfo': JSON.stringify({ '规格费用': 0, '存储费用': 0, '宽带费用': 0, '合计费用:': this.allPrice * this.n }),
             productInstanceId: '',
             payCallback: 'http://192.168.107.6:31404/account/order?orderStatus=1',
             addressInfo: 'http://192.168.107.6:31404/sub/bed_hxw/networklaborder'
@@ -349,12 +349,12 @@ export default {
 .content {
   padding: 0 30px;
   height: 100%;
-  min-width: 1500px;
+ width: 100%;
   background-color: #F0F2F5;
 }
 
 .card {
-  min-width: 1500px;
+  // min-width: 1500px;
   margin: 8px 0;
 }
 .btn {
@@ -362,7 +362,7 @@ export default {
   margin-left: 20px;
 }
 .bot {
-  min-width: 1500px;
+  // min-width: 1500px;
   font-size: 16px;
   background-color: #fff;
   margin: 8px 0;
