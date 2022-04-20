@@ -91,18 +91,12 @@
         </a-card>
       </a-form>
       <a-card :bordered="false" class="bot">
-        <a-row>
-          <a-col :span="19" :offset="0" class="left">
-            <a-icon type="info-circle" />
-            <span style="font-size: 16px"> 费用 = {{ `( 带宽费用 + 车型 + 席位 ) × 购买时长` }}</span>
-          </a-col>
-          <a-col :span="3">
-            <span style="text-align: center; display: block; color: #333333">费用总计：<span style="color: #fa7321; font-size:16px"> {{ ((allPrice) * n).toFixed(2) }}</span>算力豆/折扣价：<span style="color: #fa7321; font-size:16px"> 0 </span>算力豆(折扣-100%)</span>
-          </a-col>
-          <a-col :span="2">
-            <a-button class="btn" type="primary" @click="bought"> 立即购买 </a-button>
-          </a-col>
-        </a-row>
+        <a-icon type="info-circle" />
+        <span style="width:800px;font-size: 16px;"> 费用 = {{ `( 带宽费用 + 车型 + 席位 ) × 购买时长` }}</span>
+        <div class="bottom">
+          <span style="color: #333333">费用总计：<span style="color: #fa7321; font-size:16px"> {{ ((allPrice) * n).toFixed(2) }}</span>算力豆/折扣价：<span style="color: #fa7321; font-size:16px"> 0 </span>算力豆(折扣-100%)</span>
+          <a-button class="btn" type="primary" @click="bought"> 立即购买 </a-button>
+        </div>
       </a-card>
     </div>
   </div>
@@ -358,11 +352,12 @@ export default {
   margin: 8px 0;
 }
 .btn {
-  float: right;
+  // float: right;
   margin-left: 20px;
 }
 .bot {
   // min-width: 1500px;
+  width: 100%;
   font-size: 16px;
   background-color: #fff;
   margin: 8px 0;
@@ -373,10 +368,6 @@ export default {
 /deep/ .ant-form label {
     font-size: 16px;
 }
-// .ant-form-item label{
-//   margin-right: 10px;
-//   width: 50px;
-// }
 /deep/ .ant-btn-primary {
   background-color: #33b0ed;
   border-color: #33b0ed;
@@ -384,5 +375,9 @@ export default {
 }
 .left{
   padding-left: 28px;
+}
+.bottom{
+  width: 550px;
+  float: right;
 }
 </style>

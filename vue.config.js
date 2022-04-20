@@ -125,12 +125,12 @@ const vueConfig = {
         target: 'http://192.168.107.6:31402',
         ws: false,
         changeOrigin: true
-      },
+      }
       // ===================================oneItLab接口===================
-    },
-    headers: {
-      'Access-Control-Allow-Origin': '*' // 主应用获取子应用时跨域响应头
     }
+    // headers: {
+    //   'Access-Control-Allow-Origin': '*' // 主应用获取子应用时跨域响应头
+    // }
   },
 
   // disable source map in production
